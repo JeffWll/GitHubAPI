@@ -1,0 +1,121 @@
+﻿@page "/GitRepositories"
+
+<h3>Listar de Repositórios</h3>
+
+<div>
+    <input type="text" @bind="searchKeyword" />
+    <button @onclick="BuscarRepositorios">Pesquisar</button>
+</div>
+
+<div>
+    <input type="checkbox" @onclick="() => AtualizarLinguagemSelecionada(1)" /> C#
+    <input type="checkbox" @onclick="() => AtualizarLinguagemSelecionada(2)" /> JavaScript
+    <input type="checkbox" @onclick="() => AtualizarLinguagemSelecionada(3)" /> Kotlin
+    <input type="checkbox" @onclick="() => AtualizarLinguagemSelecionada(4)" /> C
+    <input type="checkbox" @onclick="() => AtualizarLinguagemSelecionada(5)" /> Java
+</div>
+
+<button @onclick="SalvarRepositoriosEscolhidos">Salvar Repositórios Escolhidos</button>  
+@if (isLoading)
+{
+    <p>Carregando...</p>
+}
+else if (repositories != null && repositories.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Seleção</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Linguagem</th>
+                <th>URL</th>
+                <th>URL HTML</th>
+                <th>URL Clone</th>
+                <th>URL Git</th>
+                <th>URL SSH</th>
+                <th>URL SVN</th>
+                <th>URL Mirror</th>
+                <th>ID</th>
+                <th>Node ID</th>
+                <th>Owner - ID</th>
+                <th>Owner - Login</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var repo in repositories)
+            {
+                <tr>
+                    <td><input type="checkbox" @bind="repo.IsSelected" /></td>
+                    <td>@repo.Name</td>
+                    <td>@repo.Description</td>
+                    <td>@repo.Language</td>
+                    <td>@repo.Url</td>
+                    <td>@repo.HtmlUrl</td>
+                    <td>@repo.CloneUrl</td>
+                    <td>@repo.GitUrl</td>
+                    <td>@repo.SshUrl</td>
+                    <td>@repo.SvnUrl</td>
+                    <td>@repo.MirrorUrl</td>
+                    <td>@repo.Id</td>
+                    <td>@repo.NodeId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}
+else
+{
+    <p>Nenhum repositório encontrado.</p>
+}
+
+@code {
+    private List<GitRepository> repositories;
+    private HttpClient httpClient;
+    private List<GitRepository> selectedRepositories = new List<GitRepository>();
+    private bool isLoading = false;
+    private bool hasRepositories = false;
+    private string searchKeyword = "";
+    private int selectedLanguageId = 1;
+
+    private async Task BuscarRepositorios()
+    {
+        isLoading = true;
+        httpClient = new HttpClient();
+
+        try
+        {
+            ApiSettings settings = new ApiSettings();
+            string apiUrl = settings.ApiEndpoint + "/" + searchKeyword + "/" + selectedLanguageId; 
+            repositories = await httpClient.GetFromJsonAsync<List<GitRepository>>(apiUrl);
+            isLoading = false;
+            hasRepositories = repositories != null && repositories.Any();
+        }
+        catch (Exception ex)
+        {
+            isLoading = false;
+            hasRepositories = false;
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void AtualizarLinguagemSelecionada(int linguagemId)
+    {
+        selectedLanguageId = linguagemId;
+    }
+
+    private async Task SalvarRepositoriosEscolhidos()
+    {
+        var repositoriosEscolhidos = repositories.Where(repo => repo.IsSelected).ToList();
+
+        if (repositoriosEscolhidos.Any())
+        {
+            foreach (var repo in repositories)
+            {
+                repo.IsSelected = false;
+            }
+        }
+    }
+
+}

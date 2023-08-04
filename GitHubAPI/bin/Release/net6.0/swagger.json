@@ -1,0 +1,415 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "GitHubAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "version": "1.0"
+  },
+  "paths": {
+    "/v1/ListaRepositorios": {
+      "get": {
+        "tags": [
+          "GitRepositories"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Repository"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AccountType": {
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "type": "integer"
+    },
+    "LicenseMetadata": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "nodeId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "spdxId": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "featured": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Plan": {
+      "type": "object",
+      "properties": {
+        "collaborators": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "privateRepos": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "space": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "billingEmail": {
+          "type": "string"
+        },
+        "filledSeats": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "seats": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "Repository": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "htmlUrl": {
+          "type": "string"
+        },
+        "cloneUrl": {
+          "type": "string"
+        },
+        "gitUrl": {
+          "type": "string"
+        },
+        "sshUrl": {
+          "type": "string"
+        },
+        "svnUrl": {
+          "type": "string"
+        },
+        "mirrorUrl": {
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "nodeId": {
+          "type": "string"
+        },
+        "owner": {
+          "$ref": "#/definitions/User"
+        },
+        "name": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "isTemplate": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        },
+        "homepage": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "private": {
+          "type": "boolean"
+        },
+        "fork": {
+          "type": "boolean"
+        },
+        "forksCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "stargazersCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "watchersCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "defaultBranch": {
+          "type": "string"
+        },
+        "openIssuesCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "pushedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "updatedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "permissions": {
+          "$ref": "#/definitions/RepositoryPermissions"
+        },
+        "parent": {
+          "$ref": "#/definitions/Repository"
+        },
+        "source": {
+          "$ref": "#/definitions/Repository"
+        },
+        "license": {
+          "$ref": "#/definitions/LicenseMetadata"
+        },
+        "hasIssues": {
+          "type": "boolean"
+        },
+        "hasWiki": {
+          "type": "boolean"
+        },
+        "hasDownloads": {
+          "type": "boolean"
+        },
+        "allowRebaseMerge": {
+          "type": "boolean"
+        },
+        "allowSquashMerge": {
+          "type": "boolean"
+        },
+        "allowMergeCommit": {
+          "type": "boolean"
+        },
+        "hasPages": {
+          "type": "boolean"
+        },
+        "subscribersCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "size": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "archived": {
+          "type": "boolean"
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deleteBranchOnMerge": {
+          "type": "boolean"
+        },
+        "visibility": {
+          "$ref": "#/definitions/RepositoryVisibility"
+        },
+        "allowAutoMerge": {
+          "type": "boolean"
+        },
+        "allowUpdateBranch": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RepositoryPermissions": {
+      "type": "object",
+      "properties": {
+        "admin": {
+          "type": "boolean"
+        },
+        "maintain": {
+          "type": "boolean"
+        },
+        "push": {
+          "type": "boolean"
+        },
+        "triage": {
+          "type": "boolean"
+        },
+        "pull": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RepositoryVisibility": {
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "type": "integer"
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "avatarUrl": {
+          "type": "string",
+          "readOnly": true
+        },
+        "bio": {
+          "type": "string",
+          "readOnly": true
+        },
+        "blog": {
+          "type": "string",
+          "readOnly": true
+        },
+        "collaborators": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "company": {
+          "type": "string",
+          "readOnly": true
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        },
+        "diskUsage": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "email": {
+          "type": "string",
+          "readOnly": true
+        },
+        "followers": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "following": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "hireable": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "htmlUrl": {
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "nodeId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "location": {
+          "type": "string",
+          "readOnly": true
+        },
+        "login": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type": {
+          "$ref": "#/definitions/AccountType"
+        },
+        "ownedPrivateRepos": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "plan": {
+          "$ref": "#/definitions/Plan"
+        },
+        "privateGists": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "publicGists": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "publicRepos": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "totalPrivateRepos": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "url": {
+          "type": "string",
+          "readOnly": true
+        },
+        "permissions": {
+          "$ref": "#/definitions/RepositoryPermissions"
+        },
+        "siteAdmin": {
+          "type": "boolean"
+        },
+        "suspendedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "suspended": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "ldapDistinguishedName": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

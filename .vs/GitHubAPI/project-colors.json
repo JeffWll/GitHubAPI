@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "c2058d28-51bd-41b5-9646-c328656109a9": {
+      "ProjectGuid": "c2058d28-51bd-41b5-9646-c328656109a9",
+      "DisplayName": "GitHubAPI",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
+    },
+    "f9b8e44b-916d-4375-a00b-ccdb46b2dfdf": {
+      "ProjectGuid": "f9b8e44b-916d-4375-a00b-ccdb46b2dfdf",
+      "DisplayName": "WebUIGitRepo",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
