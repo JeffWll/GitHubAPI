@@ -1,0 +1,59 @@
+﻿@page "/SavedRepositories"
+
+<h3>Repositórios Selecionados</h3>
+
+@if (selectedRepositories != null && selectedRepositories.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Linguagem</th>
+                <th>URL</th>
+                <th>URL HTML</th>
+                <th>URL Clone</th>
+                <th>URL Git</th>
+                <th>URL SSH</th>
+                <th>URL SVN</th>
+                <th>URL Mirror</th>
+                <th>ID</th>
+                <th>Node ID</th>
+                <th>Owner - ID</th>
+                <th>Owner - Login</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var repo in selectedRepositories)
+            {
+                <tr>
+                    <td>@repo.Name</td>
+                    <td>@repo.Description</td>
+                    <td>@repo.Language</td>
+                    <td>@repo.Url</td>
+                    <td>@repo.HtmlUrl</td>
+                    <td>@repo.CloneUrl</td>
+                    <td>@repo.GitUrl</td>
+                    <td>@repo.SshUrl</td>
+                    <td>@repo.SvnUrl</td>
+                    <td>@repo.MirrorUrl</td>
+                    <td>@repo.Id</td>
+                    <td>@repo.NodeId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhum repositório selecionado.</p>
+}
+
+@code {
+    private List<GitRepository> selectedRepositories;
+
+    protected override void OnInitialized()
+    {
+        selectedRepositories = new List<GitRepository>();
+    }
+}

@@ -1,4 +1,8 @@
 ﻿@page "/GitRepositories"
+@using System.Text.Json
+@using System.Text
+@using Blazored.Toast
+@using Blazored.Toast.Services
 
 <h3>Listar de Repositórios</h3>
 
@@ -79,6 +83,9 @@ else
     private string searchKeyword = "";
     private int selectedLanguageId = 1;
 
+    [Inject]
+    private IToastService toastService { get; set; }
+
     private async Task BuscarRepositorios()
     {
         isLoading = true;
@@ -87,7 +94,7 @@ else
         try
         {
             ApiSettings settings = new ApiSettings();
-            string apiUrl = settings.ApiEndpoint + "/" + searchKeyword + "/" + selectedLanguageId; 
+            string apiUrl = settings.ApiGetEndpoint + "/" + searchKeyword + "/" + selectedLanguageId; 
             repositories = await httpClient.GetFromJsonAsync<List<GitRepository>>(apiUrl);
             isLoading = false;
             hasRepositories = repositories != null && repositories.Any();
@@ -115,6 +122,31 @@ else
             {
                 repo.IsSelected = false;
             }
+        }
+
+        var jsonRepositoriosEscolhidos = JsonSerializer.Serialize(repositoriosEscolhidos);
+        var content = new StringContent(jsonRepositoriosEscolhidos, Encoding.UTF8, "application/json");
+
+        httpClient = new HttpClient();
+
+        try
+        {
+            ApiSettings settings = new ApiSettings();
+            string apiUrl = settings.ApiPostEndpoint + "/SalvarRepositoriosEscolhidos"; 
+            var response = await httpClient.PostAsync(apiUrl, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                toastService.ShowSuccess("Repositórios selecionados salvos com sucesso!");
+            }
+            else
+            {
+                toastService.ShowError("Erro ao salvar os repositórios selecionados.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 

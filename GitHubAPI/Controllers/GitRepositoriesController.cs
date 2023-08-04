@@ -25,7 +25,7 @@ namespace GitHubAPI.Controllers
 
         [HttpGet]
         [Route("ListaRepositorios/{palavraChave}/{linguagemId}")]
-        public async Task<ActionResult<List<Repository>>> GetListaRepositoriosOcto(string palavraChave, int linguagemId)
+        public async Task<ActionResult<List<Repository>>> GetListaRepositorios(string palavraChave, int linguagemId)
         {
             try
             {
@@ -47,6 +47,13 @@ namespace GitHubAPI.Controllers
             {
                 return StatusCode((int)ex.StatusCode, ex.Message);
             }
+        }
+        
+        [HttpPost]
+        [Route("SalvarRepositoriosEscolhidos")]
+        public IActionResult SalvarRepositoriosEscolhidos(List<GitRepositories> repositoriosEscolhidos)
+        {
+            return Ok();
         }
         private Language GetSelectedLanguage(int linguagemId)
         {

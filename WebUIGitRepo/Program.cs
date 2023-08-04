@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,5 +17,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 var apiSettings = new ApiSettings();
 builder.Configuration.GetSection("ApiSettings").Bind(apiSettings);
 builder.Services.AddSingleton(apiSettings);
+builder.Services.AddBlazoredToast();
 
 await builder.Build().RunAsync();

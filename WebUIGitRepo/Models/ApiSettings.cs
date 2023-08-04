@@ -2,11 +2,13 @@
 {
     public class ApiSettings
     {
-        public string ApiEndpoint { get; set; }
+        public string ApiGetEndpoint { get; set; }
+        public string ApiPostEndpoint { get; set; }
 
         public ApiSettings()
         {
-            ApiEndpoint = "https://localhost:7030/v1/ListaRepositorios";
+            ApiGetEndpoint = "https://localhost:7030/v1/ListaRepositorios";
+            ApiPostEndpoint = "https://localhost:7030/v1/";
         }
     }
 }
